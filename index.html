@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEI Student Activity Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <h1>Centralised HEI Student Activity Platform</h1>
+        <p>Smart India Hackathon Prototype</p>
+    </header>
+
+    <main class="main-layout">
+        <!-- Student Form Section -->
+        <section class="panel">
+            <h2>Add New Activity</h2>
+            <form id="activityForm">
+                <div class="field">
+                    <label>Full Name</label>
+                    <input type="text" id="studentName" required placeholder="e.g. John Doe">
+                </div>
+                <div class="field">
+                    <label>Registration ID</label>
+                    <input type="text" id="studentId" required placeholder="e.g. 2026CS1002">
+                </div>
+                <div class="field">
+                    <label>Activity Track</label>
+                    <select id="activityCategory">
+                        <option value="Technical">Technical / Hackathon</option>
+                        <option value="Sports">Sports / Athletics</option>
+                        <option value="Cultural">Cultural / Arts</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Event Name</label>
+                    <input type="text" id="activityTitle" required placeholder="e.g. SIH 2026">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Record</button>
+            </form>
+        </section>
+
+        <!-- Admin Verification Section -->
+        <section class="panel">
+            <h2>Verification Dashboard (Faculty View)</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>ID</th>
+                            <th>Track</th>
+                            <th>Event Name</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Firebase System Libraries -->
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
+    <script src="script.js"></script>
+</body>
+</html>
