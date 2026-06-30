@@ -10,6 +10,7 @@ const firebaseConfig = {
   storageBucket: "sih-student-portal.firebasestorage.app",
   messagingSenderId: "801559553018",
   appId: "1:801559553018:web:45fe0c1b9acb561c9b3a43"
+  databaseURL: "https://firebasedatabase.app"
 };
 
 // Initialize Firebase App and link Realtime Database
