@@ -2,7 +2,7 @@
 import { initializeApp } from "https://gstatic.com";
 import { getDatabase, ref, push, set } from "https://gstatic.com";
 
-// Your web app's Firebase configuration
+// Your web app's Firebase configuration coordinates
 const firebaseConfig = {
   apiKey: "AIzaSyAjkizFWNr9e9xITLT0iSZBd6hUFY-5V6M",
   authDomain: "://firebaseapp.com",
@@ -20,46 +20,49 @@ const db = getDatabase(app);
 const form = document.getElementById("activityForm");
 const submitBtn = document.getElementById("submitBtn");
 
-form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // Stop page from reloading
+if (form) {
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // STOP the page from crashing, clearing, or reloading
 
-    // Disable button to prevent multi-click database spamming
-    submitBtn.disabled = true;
-    submitBtn.innerText = "Submitting Data...";
+        // Disable button to prevent multi-click database spamming
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Submitting Data...";
 
-    // Extract values safely
-    const fullName = document.getElementById("fullName").value.trim();
-    const regId = document.getElementById("regId").value.trim();
-    const activityTrack = document.getElementById("activityTrack").value;
-    const eventName = document.getElementById("eventName").value.trim();
+        // Extract values safely from your HTML fields
+        const fullName = document.getElementById("fullName").value.trim();
+        const regId = document.getElementById("regId").value.trim();
+        const activityTrack = document.getElementById("activityTrack").value;
+        const eventName = document.getElementById("eventName").value.trim();
 
-    // Data packet format matching SIH requirements
-    const activityData = {
-        fullName: fullName,
-        regId: regId,
-        activityTrack: activityTrack,
-        eventName: eventName,
-        status: "INITIATED",
-        createdAt: new Date().toISOString()
-    };
+        // Data packet format matching SIH tracking requirements
+        const activityData = {
+            fullName: fullName,
+            regId: regId,
+            activityTrack: activityTrack,
+            eventName: eventName,
+            status: "INITIATED",
+            createdAt: new Date().toISOString()
+        };
 
-    try {
-        // Create a unique new location reference inside the "student_activities" node
-        const activityListRef = ref(db, 'student_activities');
-        const newActivityRef = push(activityListRef);
-        
-        // Write data package to cloud reference node path
-        await set(newActivityRef, activityData);
-        
-        alert("Success! Entry uploaded directly to Realtime Database. Status: INITIATED");
-        form.reset(); // Wipe UI field text inputs
-    } catch (error) {
-        console.error("Database Save Error:", error);
-        alert("Transaction Failed. Check database rules. Error: " + error.message);
-    } finally {
-        // Restore element view states
-        submitBtn.disabled = false;
-        submitBtn.innerText = "Submit Activity";
-    }
-});
-      
+        try {
+            // Create a unique new location reference inside the "student_activities" node
+            const activityListRef = ref(db, 'student_activities');
+            const newActivityRef = push(activityListRef);
+            
+            // Write data package to cloud reference node path
+            await set(newActivityRef, activityData);
+            
+            alert("Success! Entry uploaded directly to Realtime Database. Status: INITIATED");
+            form.reset(); // Safely clear out the text boxes only AFTER saving works
+        } catch (error) {
+            console.error("Database Save Error:", error);
+            alert("Transaction Failed. Error: " + error.message);
+        } finally {
+            // Restore button to its normal state
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit Activity";
+        }
+    });
+} else {
+    console.error("Could not find form element with id='activityForm'");
+}
